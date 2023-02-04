@@ -1,13 +1,13 @@
 export interface IEvent {
   title: string;
   dateStringBeforePresent?: string;
-  dateYearsBeforePresent?: number;
+  dateYearsBeforePresent: number;
   date?: Date;
   modernHistory: boolean;
   description?: string;
 }
 
-const referenceYear = 2023;
+export const referenceYear = 2023;
 
 export const timeline: IEvent[] = [
   {

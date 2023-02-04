@@ -1,81 +1,164 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/Layout.astro";
+import { timeline, IEvent, referenceYear } from "../utils/timeline";
+
+type ITimelineSpan = "day" | "year";
+
+const getEventTimeByRatio = (
+  yearBeforePresent: number,
+  timelineSpan: ITimelineSpan
+) => {
+  const startTimeline = timeline[0].dateYearsBeforePresent;
+  const endTimeline = 0;
+  const yearsComparedToStart = startTimeline - yearBeforePresent;
+  const timeSpanYearEquivalent = startTimeline - endTimeline;
+  let spanRatio;
+  if (timelineSpan === "day") {
+    spanRatio = 24;
+  } else if (timelineSpan === "year") {
+    spanRatio = 365;
+  } else {
+    return;
+  }
+  const ratioOverTimeSpan =
+    (yearsComparedToStart * spanRatio) / timeSpanYearEquivalent;
+
+  if (timelineSpan === "day") {
+    return timeConvert(ratioOverTimeSpan);
+  } else if (timelineSpan === "year") {
+    // TODO: make it work
+    return ratioOverTimeSpan;
+  } else {
+    return ratioOverTimeSpan;
+  }
+};
+
+// TODO: make it work
+const convertDaysToDate = (dayNumber: number) => {};
+
+// TODO: add seconds
+function timeConvert(hours: number) {
+  // return hours;
+  const hoursToDisplay = Math.floor(hours);
+  const minutes = (hours - Math.floor(hours)) * 60;
+  const minutesToDisplay = Math.floor(minutes);
+  return hoursToDisplay + ":" + minutesToDisplay;
+}
+
+// TODO: once display by year works nicely, change default to display by year
+const defaultTimeUnitOnLoad = "day";
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<script>
+  const adjustTimeline = (e: Event) => {
+    const timelineUnit = e?.target?.value;
+    if (!timelineUnit) return false;
+    document
+      .querySelectorAll("ul > li > span")
+      .forEach((eventElSpan: HTMLSpanElement) => {
+        if (eventElSpan?.dataset.unit === timelineUnit) {
+          eventElSpan.style.display = "block";
+        } else if (eventElSpan?.dataset.unit !== timelineUnit) {
+          eventElSpan.style.display = "none";
+        }
+      });
+  };
+  document
+    .querySelectorAll("input")
+    .forEach((input) => input.addEventListener("input", adjustTimeline));
+</script>
+
+<Layout title='Welcome to Astro.'>
+  <h1>🐵🔥 <span class='text-gradient'>Humankind</span> Timeline 🚀👩‍🚀</h1>
+  <main>
+    <form class='time-unit-selection'>
+      <fieldset>
+        <legend>Select a timeline unit:</legend>
+
+        <div>
+          <input
+            type='radio'
+            id='years-vs-present'
+            name='drone'
+            value='years-vs-present'
+          />
+          <label for='years-vs-present'>Years before present</label>
+        </div>
+
+        <div>
+          <input
+            type='radio'
+            id='years-vs-era'
+            name='drone'
+            value='years-vs-era'
+          />
+          <label for='years-vs-era'>Years compared to out era</label>
+        </div>
+
+        <div>
+          <input
+            type='radio'
+            id='history-in-a-year'
+            name='drone'
+            value='history-in-a-year'
+          />
+          <label for='history-in-a-year'>If history was 1 year</label>
+        </div>
+
+        <div>
+          <input
+            type='radio'
+            id='history-in-a-day'
+            name='drone'
+            value='history-in-a-day'
+            checked
+          />
+          <label for='history-in-a-day'>If history was 1 day</label>
+        </div>
+      </fieldset>
+    </form>
+  </main>
+  <ul role='list' class='timeline' data-timeline-role='timeline'>
+    {
+      timeline.map((event: IEvent) => (
+        <li data-timeline-role='event'>
+          <span data-unit='years-vs-present'>
+            {event.dateYearsBeforePresent} before present day
+          </span>
+          <span data-unit='years-vs-era'>
+            {event.dateYearsBeforePresent < referenceYear
+              ? referenceYear - event.dateYearsBeforePresent
+              : referenceYear - event.dateYearsBeforePresent}
+          </span>
+          <span data-unit='history-in-a-year'>
+            {getEventTimeByRatio(event.dateYearsBeforePresent, "year")}
+          </span>
+          <span data-unit='history-in-a-day'>
+            {getEventTimeByRatio(event.dateYearsBeforePresent, "day")}
+          </span>
+          {event.title}
+        </li>
+      ))
+    }
+  </ul>
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
 </style>
