@@ -24,30 +24,42 @@ const getEventTimeByRatio = (
     (yearsComparedToStart * spanRatio) / timeSpanYearEquivalent;
 
   if (timelineSpan === "day") {
-    return timeConvert(ratioOverTimeSpan);
+    return displayHoursMinutesSeconds(ratioOverTimeSpan);
   } else if (timelineSpan === "year") {
-    // TODO: make it work
-    return ratioOverTimeSpan;
+    return convertDaysToDate(ratioOverTimeSpan);
   } else {
     return ratioOverTimeSpan;
   }
 };
 
-// TODO: make it work
-const convertDaysToDate = (dayNumber: number) => {};
+function addDays(date: Date, days: number) {
+  const result = date;
+  result.setDate(result.getDate() + days);
+  const hours = days - Math.floor(days);
+  result.setHours(...timeConvert(hours));
+  console.log("res", date, days, result);
+  return result;
+}
 
-// TODO: add seconds
-function timeConvert(hours: number) {
-  // return hours;
+const thisStartOfYearDate = new Date(Date.UTC(2023, 0, 1, 0, 0, 0));
+const convertDaysToDate = (daysNumber: number) => {
+  const adjustedDate = addDays(thisStartOfYearDate, daysNumber);
+  console.log("adj", thisStartOfYearDate, daysNumber, adjustedDate);
+  return adjustedDate.toLocaleString("fr-fr");
+};
+
+function timeConvert(hours: number): number[] {
   const hoursToDisplay = Math.floor(hours);
   const minutes = (hours - Math.floor(hours)) * 60;
   const minutesToDisplay = Math.floor(minutes);
-  const seconds = minutes % 60;
   const secondsToDisplay = Math.floor(minutes % 60);
-  return (
-    hoursToDisplay + ":" + minutesToDisplay + "'" + secondsToDisplay + "''"
-  );
+  return [hoursToDisplay, minutesToDisplay, secondsToDisplay];
 }
+
+const displayHoursMinutesSeconds = (hours: number): string => {
+  const hoursMinSecArr = timeConvert(hours);
+  return `${hoursMinSecArr[0]}:${hoursMinSecArr[1]}'${hoursMinSecArr[2]}''`;
+};
 ---
 
 <script>
