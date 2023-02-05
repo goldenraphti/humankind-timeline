@@ -48,8 +48,10 @@ export const timeline: IEvent[] = [
     modernHistory: false,
   },
   {
-    title:
-      "The Cognitive Revolution. Emergence of fictive language. Beginning of history. Sapiens spread out of Africa",
+    title: `The Cognitive Revolution.
+      Emergence of fictive language.
+      Beginning of history.
+      Sapiens spread out of Africa`,
     dateStringBeforePresent: "-70 000",
     dateYearsBeforePresent: 70000,
     modernHistory: false,
