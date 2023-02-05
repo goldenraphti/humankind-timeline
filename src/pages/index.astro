@@ -34,18 +34,20 @@ const getEventTimeByRatio = (
 
 function addDays(date: Date, days: number) {
   const result = date;
-  result.setDate(result.getDate() + days);
-  const hours = days - Math.floor(days);
+  const daysInteger = Math.floor(days);
+  const hours = days - daysInteger;
+  console.log("res", result, ...timeConvert(hours));
+
+  result.setDate(result.getDate() + daysInteger);
   result.setHours(...timeConvert(hours));
-  console.log("res", date, days, result);
   return result;
 }
 
-const thisStartOfYearDate = new Date(Date.UTC(2023, 0, 1, 0, 0, 0));
 const convertDaysToDate = (daysNumber: number) => {
+  const thisStartOfYearDate = new Date(Date.UTC(2023, 0, 1, 0, 0, 0));
   const adjustedDate = addDays(thisStartOfYearDate, daysNumber);
   console.log("adj", thisStartOfYearDate, daysNumber, adjustedDate);
-  return adjustedDate.toLocaleString("fr-fr");
+  return adjustedDate.toLocaleString();
 };
 
 function timeConvert(hours: number): number[] {
