@@ -5,9 +5,6 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 ## Roadmap
 
-- [ ] fix seconds when select by day
-- [ ] fix By Year ( Day / Month + hours & minutes & seconds if near the end)
-- [ ] add possibility to select the start of the timeline (genre Homo / Neandertals / fire) & add the default
 - [ ] style for mobile
 - [ ] improve styling
 - [ ] change favicons

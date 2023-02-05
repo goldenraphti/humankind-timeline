@@ -101,7 +101,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
           <input
             type='radio'
             id='years-vs-present'
-            name='drone'
+            name='display-unit-timeline'
             value='years-vs-present'
           />
           <label for='years-vs-present'>Years before present</label>
@@ -111,7 +111,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
           <input
             type='radio'
             id='years-vs-era'
-            name='drone'
+            name='display-unit-timeline'
             value='years-vs-era'
           />
           <label for='years-vs-era'>Years compared to out era</label>
@@ -121,8 +121,9 @@ const displayHoursMinutesSeconds = (hours: number): string => {
           <input
             type='radio'
             id='history-in-a-year'
-            name='drone'
+            name='display-unit-timeline'
             value='history-in-a-year'
+            checked
           />
           <label for='history-in-a-year'>If history was 1 year</label>
         </div>
@@ -131,9 +132,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
           <input
             type='radio'
             id='history-in-a-day'
-            name='drone'
+            name='display-unit-timeline'
             value='history-in-a-day'
-            checked
           />
           <label for='history-in-a-day'>If history was 1 day</label>
         </div>
@@ -152,10 +152,10 @@ const displayHoursMinutesSeconds = (hours: number): string => {
               ? referenceYear - event.dateYearsBeforePresent
               : referenceYear - event.dateYearsBeforePresent}
           </span>
-          <span data-unit='history-in-a-year' style={"display: none;"}>
+          <span data-unit='history-in-a-year'>
             {getEventTimeByRatio(event.dateYearsBeforePresent, "year")}
           </span>
-          <span data-unit='history-in-a-day'>
+          <span data-unit='history-in-a-day' style={"display: none;"}>
             {getEventTimeByRatio(event.dateYearsBeforePresent, "day")}
           </span>
           {event.title}

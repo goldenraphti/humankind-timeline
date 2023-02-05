@@ -10,12 +10,12 @@ export interface IEvent {
 export const referenceYear = 2023;
 
 export const timeline: IEvent[] = [
-  {
-    title: "Last common grandmother of humans and chimpanzees",
-    dateStringBeforePresent: "6 million",
-    dateYearsBeforePresent: 6000000,
-    modernHistory: false,
-  },
+  // {
+  //   title: "Last common grandmother of humans and chimpanzees",
+  //   dateStringBeforePresent: "6 million",
+  //   dateYearsBeforePresent: 6000000,
+  //   modernHistory: false,
+  // },
   {
     title: "Evolution of the genus Homo in Africa. First stone tools",
     dateStringBeforePresent: "2.5 million",
