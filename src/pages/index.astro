@@ -36,7 +36,6 @@ function addDays(date: Date, days: number) {
   const result = date;
   const daysInteger = Math.floor(days);
   const hours = days - daysInteger;
-  console.log("res", result, ...timeConvert(hours));
 
   result.setDate(result.getDate() + daysInteger);
   result.setHours(...timeConvert(hours));
@@ -46,8 +45,11 @@ function addDays(date: Date, days: number) {
 const convertDaysToDate = (daysNumber: number) => {
   const thisStartOfYearDate = new Date(Date.UTC(2023, 0, 1, 0, 0, 0));
   const adjustedDate = addDays(thisStartOfYearDate, daysNumber);
-  console.log("adj", thisStartOfYearDate, daysNumber, adjustedDate);
-  return adjustedDate.toLocaleString();
+  return adjustedDate.toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 };
 
 function timeConvert(hours: number): number[] {
@@ -80,7 +82,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     const timelineUnit = e?.target?.value;
     if (!timelineUnit) return false;
     document
-      .querySelectorAll("ul > li > span")
+      .querySelectorAll("ul > li > div.time > span")
       .forEach((eventElSpan) => adjustTimeline(eventElSpan, timelineUnit));
   };
   document
@@ -142,23 +144,29 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   </main>
   <ul role='list' class='timeline' data-timeline-role='timeline'>
     {
-      timeline.map((event: IEvent) => (
+      timeline.map((event: IEvent, i) => (
         <li data-timeline-role='event'>
-          <span data-unit='years-vs-present' style={"display: none;"}>
-            {event.dateYearsBeforePresent} before present day
-          </span>
-          <span data-unit='years-vs-era' style={"display: none;"}>
-            {event.dateYearsBeforePresent < referenceYear
-              ? referenceYear - event.dateYearsBeforePresent
-              : referenceYear - event.dateYearsBeforePresent}
-          </span>
-          <span data-unit='history-in-a-year'>
-            {getEventTimeByRatio(event.dateYearsBeforePresent, "year")}
-          </span>
-          <span data-unit='history-in-a-day' style={"display: none;"}>
-            {getEventTimeByRatio(event.dateYearsBeforePresent, "day")}
-          </span>
-          {event.title}
+          <div class='time text-gradient'>
+            <span data-unit='years-vs-present' style={"display: none;"}>
+              {event.dateYearsBeforePresent} before present day
+            </span>
+            <span data-unit='years-vs-era' style={"display: none;"}>
+              {event.dateYearsBeforePresent < referenceYear
+                ? referenceYear - event.dateYearsBeforePresent
+                : referenceYear - event.dateYearsBeforePresent}
+            </span>
+            <span data-unit='history-in-a-year'>
+              {i !== timeline.length - 1
+                ? getEventTimeByRatio(event.dateYearsBeforePresent, "year") +
+                  " " +
+                  getEventTimeByRatio(event.dateYearsBeforePresent, "day")
+                : "midnight"}
+            </span>
+            <span data-unit='history-in-a-day' style={"display: none;"}>
+              {getEventTimeByRatio(event.dateYearsBeforePresent, "day")}
+            </span>
+          </div>
+          <div class='title'>{event.title}</div>
         </li>
       ))
     }
@@ -182,5 +190,17 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     -webkit-text-fill-color: transparent;
     background-size: 400%;
     background-position: 0%;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
