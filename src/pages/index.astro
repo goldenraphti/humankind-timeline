@@ -102,6 +102,27 @@ const displayHoursMinutesSeconds = (hours: number): string => {
         <div>
           <input
             type='radio'
+            id='history-in-a-year'
+            name='display-unit-timeline'
+            value='history-in-a-year'
+            checked
+          />
+          <label for='history-in-a-year'>If History was 1 year</label>
+        </div>
+
+        <div>
+          <input
+            type='radio'
+            id='history-in-a-day'
+            name='display-unit-timeline'
+            value='history-in-a-day'
+          />
+          <label for='history-in-a-day'>If History was 1 day</label>
+        </div>
+
+        <div>
+          <input
+            type='radio'
             id='years-vs-present'
             name='display-unit-timeline'
             value='years-vs-present'
@@ -117,27 +138,6 @@ const displayHoursMinutesSeconds = (hours: number): string => {
             value='years-vs-era'
           />
           <label for='years-vs-era'>Years compared to out era</label>
-        </div>
-
-        <div>
-          <input
-            type='radio'
-            id='history-in-a-year'
-            name='display-unit-timeline'
-            value='history-in-a-year'
-            checked
-          />
-          <label for='history-in-a-year'>If history was 1 year</label>
-        </div>
-
-        <div>
-          <input
-            type='radio'
-            id='history-in-a-day'
-            name='display-unit-timeline'
-            value='history-in-a-day'
-          />
-          <label for='history-in-a-day'>If history was 1 day</label>
         </div>
       </fieldset>
     </form>
