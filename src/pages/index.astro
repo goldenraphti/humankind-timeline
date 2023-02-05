@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { timeline, IEvent, referenceYear } from "../utils/timeline";
 
-type ITimelineSpan = "day" | "year";
+export type ITimelineSpan = "day" | "year";
 
 const getEventTimeByRatio = (
   yearBeforePresent: number,
@@ -18,7 +18,7 @@ const getEventTimeByRatio = (
   } else if (timelineSpan === "year") {
     spanRatio = 365;
   } else {
-    return;
+    return false;
   }
   const ratioOverTimeSpan =
     (yearsComparedToStart * spanRatio) / timeSpanYearEquivalent;
@@ -44,28 +44,32 @@ function timeConvert(hours: number) {
   const minutesToDisplay = Math.floor(minutes);
   return hoursToDisplay + ":" + minutesToDisplay;
 }
-
-// TODO: once display by year works nicely, change default to display by year
-const defaultTimeUnitOnLoad = "day";
 ---
 
 <script>
-  const adjustTimeline = (e: Event) => {
+  const adjustTimeline = (
+    spanElmt: HTMLSpanElement,
+    timelineUnit: ITimelineSpan
+  ) => {
+    if (spanElmt?.dataset.unit === timelineUnit) {
+      spanElmt.style.display = "block";
+    } else if (spanElmt?.dataset.unit !== timelineUnit) {
+      spanElmt.style.display = "none";
+    }
+  };
+
+  const listenToTimelineInputChange = (e: Event) => {
     const timelineUnit = e?.target?.value;
     if (!timelineUnit) return false;
     document
       .querySelectorAll("ul > li > span")
-      .forEach((eventElSpan: HTMLSpanElement) => {
-        if (eventElSpan?.dataset.unit === timelineUnit) {
-          eventElSpan.style.display = "block";
-        } else if (eventElSpan?.dataset.unit !== timelineUnit) {
-          eventElSpan.style.display = "none";
-        }
-      });
+      .forEach((eventElSpan) => adjustTimeline(eventElSpan, timelineUnit));
   };
   document
     .querySelectorAll("input")
-    .forEach((input) => input.addEventListener("input", adjustTimeline));
+    .forEach((input) =>
+      input.addEventListener("input", listenToTimelineInputChange)
+    );
 </script>
 
 <Layout title='Welcome to Astro.'>
@@ -122,15 +126,15 @@ const defaultTimeUnitOnLoad = "day";
     {
       timeline.map((event: IEvent) => (
         <li data-timeline-role='event'>
-          <span data-unit='years-vs-present'>
+          <span data-unit='years-vs-present' style={"display: none;"}>
             {event.dateYearsBeforePresent} before present day
           </span>
-          <span data-unit='years-vs-era'>
+          <span data-unit='years-vs-era' style={"display: none;"}>
             {event.dateYearsBeforePresent < referenceYear
               ? referenceYear - event.dateYearsBeforePresent
               : referenceYear - event.dateYearsBeforePresent}
           </span>
-          <span data-unit='history-in-a-year'>
+          <span data-unit='history-in-a-year' style={"display: none;"}>
             {getEventTimeByRatio(event.dateYearsBeforePresent, "year")}
           </span>
           <span data-unit='history-in-a-day'>
