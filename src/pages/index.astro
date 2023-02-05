@@ -42,7 +42,11 @@ function timeConvert(hours: number) {
   const hoursToDisplay = Math.floor(hours);
   const minutes = (hours - Math.floor(hours)) * 60;
   const minutesToDisplay = Math.floor(minutes);
-  return hoursToDisplay + ":" + minutesToDisplay;
+  const seconds = minutes % 60;
+  const secondsToDisplay = Math.floor(minutes % 60);
+  return (
+    hoursToDisplay + ":" + minutesToDisplay + "'" + secondsToDisplay + "''"
+  );
 }
 ---
 
