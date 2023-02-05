@@ -92,7 +92,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     );
 </script>
 
-<Layout title='Welcome to Astro.'>
+<Layout title='👩‍🚀Humankind timeline'>
   <h1>🐵🔥 <span class='text-gradient'>Humankind</span> Timeline 🚀👩‍🚀</h1>
   <main>
     <form class='time-unit-selection'>
@@ -137,7 +137,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
             name='display-unit-timeline'
             value='years-vs-era'
           />
-          <label for='years-vs-era'>Years compared to out era</label>
+          <label for='years-vs-era'>Years compared to our era</label>
         </div>
       </fieldset>
     </form>
@@ -148,7 +148,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
         <li data-timeline-role='event'>
           <div class='time text-gradient'>
             <span data-unit='years-vs-present' style={"display: none;"}>
-              {event.dateYearsBeforePresent} before present day
+              {event.dateYearsBeforePresent}
+              <span class='low-opacity'>before present day</span>
             </span>
             <span data-unit='years-vs-era' style={"display: none;"}>
               {event.dateYearsBeforePresent < referenceYear
@@ -204,5 +205,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .low-opacity {
+    opacity: 0.8;
   }
 </style>
