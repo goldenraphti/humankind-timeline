@@ -18,6 +18,11 @@ const { title } = Astro.props;
       name='generator'
       content={Astro.generator}
     />
+    <meta property='og:title' content={title} />
+    <meta property='og:type' content='website' />
+    <meta property='og:image' content='/assets/humankind-timeline-og.jpg' />
+    <meta property='og:url' content='https://humankind-timeline.netlify.app' />
+
     <title>{title}</title>
   </head>
   <body>
