@@ -4,6 +4,9 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+
+const description =
+  "An easy and fun new way to look at the timeline of humankind. E.g. What if humankind History was 1 day, at what hour would have happened the Agriculture Revolution? What about the first kingdoms, or money? You might be surprised ... 🤯";
 ---
 
 <!DOCTYPE html>
@@ -22,6 +25,8 @@ const { title } = Astro.props;
     <meta property='og:type' content='website' />
     <meta property='og:image' content='/assets/humankind-timeline-og.jpg' />
     <meta property='og:url' content='https://humankind-timeline.netlify.app' />
+    <meta property='og:description' content={description} />
+    <meta name='description' content={description} />
 
     <title>{title}</title>
   </head>
