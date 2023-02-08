@@ -5,14 +5,15 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 ## Roadmap
 
+- [ ] improve in 1 year : remove day name (e.g. Monday)
 - [ ] improve display hours
 - [ ] improve display numbers
+- [ ] fix alignment years before present in safari (?!!)
 - [ ] improve display "before present day" (lower opacity?)
 - [ ] improve styling in general
 - [ ] add small credits + link
 - [ ] make i18n (dates)
 - [ ] make i18n (texts)
-- [ ] open graph
 - [ ] SEO
 - [ ] A11y
 - [ ] this is v1.0.0
