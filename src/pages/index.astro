@@ -46,7 +46,6 @@ const convertDaysToDate = (daysNumber: number) => {
   const thisStartOfYearDate = new Date(Date.UTC(2023, 0, 1, 0, 0, 0));
   const adjustedDate = addDays(thisStartOfYearDate, daysNumber);
   return adjustedDate.toLocaleDateString(undefined, {
-    weekday: "long",
     month: "long",
     day: "numeric",
   });

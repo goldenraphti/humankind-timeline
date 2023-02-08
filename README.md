@@ -5,7 +5,6 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 ## Roadmap
 
-- [ ] improve in 1 year : remove day name (e.g. Monday)
 - [ ] improve display hours
 - [ ] improve display numbers
 - [ ] fix alignment years before present in safari (?!!)
