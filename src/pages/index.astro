@@ -66,6 +66,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
 ---
 
 <script>
+  export type ITimelineSpan = "day" | "year";
+
   const adjustTimeline = (
     spanElmt: HTMLSpanElement,
     timelineUnit: ITimelineSpan
@@ -160,10 +162,12 @@ const displayHoursMinutesSeconds = (hours: number): string => {
                 ? getEventTimeByRatio(event.dateYearsBeforePresent, "year") +
                   " " +
                   getEventTimeByRatio(event.dateYearsBeforePresent, "day")
-                : "midnight"}
+                : "End of the year, midnight"}
             </span>
             <span data-unit='history-in-a-day' style={"display: none;"}>
-              {getEventTimeByRatio(event.dateYearsBeforePresent, "day")}
+              {i !== timeline.length - 1
+                ? getEventTimeByRatio(event.dateYearsBeforePresent, "day")
+                : "midnight"}
             </span>
           </div>
           <div class='title'>{event.title}</div>
