@@ -170,7 +170,11 @@ const displayHoursMinutesSeconds = (hours: number): string => {
                 : "midnight"}
             </span>
           </div>
-          <div class='title'>{event.title}</div>
+          <div class='title'>
+            {event.events.map((evt) => (
+              <p>{evt}</p>
+            ))}
+          </div>
         </li>
       ))
     }
@@ -199,7 +203,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     list-style: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 30px;
     padding-left: 0;
     max-width: 100ch;
@@ -208,6 +212,9 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .title p {
+    text-align: center;
   }
   .hidden-on-load {
     display: none;
