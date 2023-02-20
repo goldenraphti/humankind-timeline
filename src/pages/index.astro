@@ -68,31 +68,32 @@ const displayHoursMinutesSeconds = (hours: number): string => {
 <script>
   export type ITimelineSpan = "day" | "year";
 
-  const adjustTimeline = (
-    spanElmt: HTMLSpanElement,
-    timelineUnit: ITimelineSpan
-  ) => {
-    if (spanElmt?.dataset.unit === timelineUnit) {
-      spanElmt.style.display = "block";
-    } else if (spanElmt?.dataset.unit !== timelineUnit) {
-      spanElmt.style.display = "none";
-    }
-  };
+  if (!CSS.supports("selector(:has(input))")) {
+    const adjustTimeline = (
+      spanElmt: HTMLSpanElement,
+      timelineUnit: ITimelineSpan
+    ) => {
+      if (spanElmt?.dataset.unit === timelineUnit) {
+        spanElmt.style.display = "block";
+      } else if (spanElmt?.dataset.unit !== timelineUnit) {
+        spanElmt.style.display = "none";
+      }
+    };
 
-  const listenToTimelineInputChange = (e: Event) => {
-    const timelineUnit = e?.target?.value;
-    if (!timelineUnit) return false;
+    const listenToTimelineInputChange = (e: Event) => {
+      const timelineUnit = e?.target?.value;
+      if (!timelineUnit) return false;
+      document
+        .querySelectorAll("ul > li > div.time > span")
+        .forEach((eventElSpan) => adjustTimeline(eventElSpan, timelineUnit));
+    };
     document
-      .querySelectorAll("ul > li > div.time > span")
-      .forEach((eventElSpan) => adjustTimeline(eventElSpan, timelineUnit));
-  };
-  document
-    .querySelectorAll("input")
-    .forEach((input) =>
-      input.addEventListener("input", listenToTimelineInputChange)
-    );
+      .querySelectorAll("input")
+      .forEach((input) =>
+        input.addEventListener("input", listenToTimelineInputChange)
+      );
+  }
 </script>
-
 <Layout title='👩‍🚀Humankind timeline'>
   <h1>🐵🔥 <span class='text-gradient'>Humankind</span> Timeline 🚀👩‍🚀</h1>
   <main>
@@ -148,11 +149,10 @@ const displayHoursMinutesSeconds = (hours: number): string => {
       timeline.map((event: IEvent, i) => (
         <li data-timeline-role='event'>
           <div class='time text-gradient'>
-            <span data-unit='years-vs-present' style={"display: none;"}>
-              {event.dateYearsBeforePresent}
-              <span class='low-opacity'>before present day</span>
+            <span data-unit='years-vs-present' class='hidden-on-load'>
+              {event.dateYearsBeforePresent} before present day
             </span>
-            <span data-unit='years-vs-era' style={"display: none;"}>
+            <span data-unit='years-vs-era' class='hidden-on-load'>
               {event.dateYearsBeforePresent < referenceYear
                 ? referenceYear - event.dateYearsBeforePresent
                 : referenceYear - event.dateYearsBeforePresent}
@@ -164,7 +164,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
                   getEventTimeByRatio(event.dateYearsBeforePresent, "day")
                 : "End of the year, midnight"}
             </span>
-            <span data-unit='history-in-a-day' style={"display: none;"}>
+            <span data-unit='history-in-a-day' class='hidden-on-load'>
               {i !== timeline.length - 1
                 ? getEventTimeByRatio(event.dateYearsBeforePresent, "day")
                 : "midnight"}
@@ -209,7 +209,51 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     flex-direction: column;
     align-items: center;
   }
-  .low-opacity {
-    opacity: 0.8;
+  .hidden-on-load {
+    display: none;
+  }
+
+  @supports selector(:has(input)) {
+    body:has(input[name="display-unit-timeline"][value="history-in-a-year"])
+      span[data-unit="history-in-a-year"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="history-in-a-year"]:checked
+      )
+      span[data-unit="history-in-a-year"] {
+      display: block;
+    }
+
+    body:has(input[name="display-unit-timeline"][value="history-in-a-day"])
+      span[data-unit="history-in-a-day"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="history-in-a-day"]:checked
+      )
+      span[data-unit="history-in-a-day"] {
+      display: block;
+    }
+
+    body:has(input[name="display-unit-timeline"][value="years-vs-present"])
+      span[data-unit="years-vs-present"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="years-vs-present"]:checked
+      )
+      span[data-unit="years-vs-present"] {
+      display: block;
+    }
+
+    body:has(input[name="display-unit-timeline"][value="years-vs-era"])
+      span[data-unit="years-vs-era"] {
+      display: none;
+    }
+    body:has(input[name="display-unit-timeline"][value="years-vs-era"]:checked)
+      span[data-unit="years-vs-era"] {
+      display: block;
+    }
   }
 </style>
