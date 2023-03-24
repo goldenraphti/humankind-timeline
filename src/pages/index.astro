@@ -97,7 +97,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
 <Layout title='👩‍🚀Humankind timeline'>
   <h1>🐵🔥 <span class='text-gradient'>Humankind</span> Timeline 🚀👩‍🚀</h1>
   <main>
-    <form class='time-unit-selection'>
+    <form class='time-unit-selection card'>
       <fieldset>
         <legend>Select a timeline unit ⏰</legend>
 
@@ -208,13 +208,12 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     background-size: 400%;
     background-position: 0%;
   }
-  form {
-    background: var(--gradient-green);
-    border-radius: 15px;
+  form.card {
     padding: 25px;
     box-shadow: var(--shadow-elevation-high);
     margin-bottom: 100px;
-    z-index: 5;
+    min-block-size: auto;
+    min-inline-size: auto;
   }
   fieldset {
     border: none;

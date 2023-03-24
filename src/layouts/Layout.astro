@@ -35,7 +35,9 @@ const description =
   <body>
     <slot />
     <footer>
-      Made with 💚 by <a href='https://raphaelferrand.com'>Raphaël Ferrand</a>
+      <div class='card'>
+        Made with 💚 by <a href='https://raphaelferrand.com'>Raphaël Ferrand</a>
+      </div>
     </footer>
   </body>
 </html>
@@ -103,10 +105,19 @@ const description =
   legend {
     font-family: "DM Serif Display", serif;
   }
+  .card {
+    background: var(--gradient-green);
+    border-radius: 15px;
+    z-index: 5;
+  }
 </style>
 <style>
   footer {
     margin-top: 50px;
-    opacity: 0.7;
+  }
+  footer .card {
+    margin-bottom: 10px;
+    padding: 15px 25px;
+    box-shadow: var(--shadow-elevation-medium);
   }
 </style>
