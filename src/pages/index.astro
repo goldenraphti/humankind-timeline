@@ -99,7 +99,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   <main>
     <form class='time-unit-selection'>
       <fieldset>
-        <legend>Select a timeline unit</legend>
+        <legend>Select a timeline unit ⏰</legend>
 
         <div>
           <input
@@ -214,6 +214,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     padding: 25px;
     box-shadow: var(--shadow-elevation-high);
     margin-bottom: 100px;
+    z-index: 5;
   }
   fieldset {
     border: none;
@@ -221,17 +222,24 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   legend {
     font-size: 1.5em;
     font-weight: bold;
-    text-transform: uppercase;
     color: var(--green-2-darker);
     padding-bottom: 15px;
   }
   fieldset div {
     padding: 5px 0 7px;
     margin: 3px 0;
+    border-radius: 6px;
+  }
+  fieldset div:focus-within {
+    outline: 4px solid var(--green-2-dark);
   }
   fieldset div:has(input:checked) {
     outline: 2px solid var(--green-2-dark);
     border-radius: 6px;
+  }
+  input,
+  label {
+    cursor: pointer;
   }
   section.timeline {
     display: grid;
@@ -318,8 +326,23 @@ const displayHoursMinutesSeconds = (hours: number): string => {
       display: block;
     }
 
+    fieldset div:focus-within {
+      outline: none;
+    }
+    fieldset div:has(input:focus-visible) {
+      outline: 4px solid var(--pink-1);
+    }
     fieldset input {
-      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    h1 {
+      font-size: 2em;
+    }
+    form {
+      margin-bottom: 70px;
     }
   }
 </style>
