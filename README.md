@@ -6,16 +6,13 @@ Because at the end we're just a couple of animals on a big rock flying through s
 ## Roadmap
 
 - [ ] improve display hours
+- [ ] improve perf try conditional import of "hasNotSupported" script, so browsers supporting `:has(input)` do not even have to have this script
 - [ ] improve display numbers
-- [ ] fix alignment years before present in safari (?!!)
-- [ ] improve display "before present day" (lower opacity?)
-- [ ] improve styling in general
 - [ ] add small credits + link
 - [ ] make i18n (dates)
 - [ ] make i18n (texts)
 - [ ] SEO
 - [ ] A11y
-- [ ] this is v1.0.0
 - [ ] Web Perf
 - [ ] improve timeline? (add new events?)
 
