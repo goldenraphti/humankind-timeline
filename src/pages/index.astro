@@ -197,7 +197,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     accent-color: var(--pink-1);
   }
   h1 {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 800;
     margin: 0;
   }
@@ -212,7 +212,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     align-self: center;
     padding: 25px;
     box-shadow: var(--shadow-elevation-high);
-    margin-bottom: 100px;
+    margin-bottom: 70px;
     min-block-size: auto;
     min-inline-size: auto;
   }
@@ -355,12 +355,17 @@ const displayHoursMinutesSeconds = (hours: number): string => {
       background-color: var(--green-2-lighter);
     }
   }
-  @media screen and (max-width: 800px) {
+  @media screen and (min-width: 600px) {
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
     }
-    form {
-      margin-bottom: 70px;
+  }
+  @media screen and (min-width: 800px) {
+    h1 {
+      font-size: 3em;
+    }
+    form.card {
+      margin-bottom: 100px;
     }
   }
 </style>
