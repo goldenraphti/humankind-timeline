@@ -9,8 +9,7 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 - [ ] improve display hours
 - [ ] improve perf try conditional import of "hasNotSupported" script, so browsers supporting `:has(input)` do not even have to have this script
-- [ ] add ratio by distance entered vi ainput number
-- [ ] fix A11y contrast input checked
+- [ ] add ratio by distance entered via input number
 - [ ] improve display numbers
 - [ ] add small credits + link
 - [ ] make i18n (dates)
