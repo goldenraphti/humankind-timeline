@@ -27,6 +27,8 @@ const getEventTimeByRatio = (
     return displayHoursMinutesSeconds(ratioOverTimeSpan);
   } else if (timelineSpan === "year") {
     return convertDaysToDate(ratioOverTimeSpan);
+  } else if (timelineSpan === "year") {
+    console.log("ratio");
   } else {
     return ratioOverTimeSpan;
   }
@@ -63,6 +65,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   const hoursMinSecArr = timeConvert(hours);
   return `${hoursMinSecArr[0]}:${hoursMinSecArr[1]}'${hoursMinSecArr[2]}''`;
 };
+
+const enableDistanceInput = true;
 ---
 
 <script>
@@ -75,13 +79,19 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     ) => {
       if (spanElmt?.dataset.unit === timelineUnit) {
         spanElmt.style.display = "block";
+      } else if (
+        spanElmt?.dataset.unit === "history-in-distance" &&
+        timelineUnit
+      ) {
+        spanElmt.style.display = "block";
       } else if (spanElmt?.dataset.unit !== timelineUnit) {
         spanElmt.style.display = "none";
       }
     };
 
     const listenToTimelineInputChange = (e: Event) => {
-      const timelineUnit = e?.target?.value;
+      const timelineUnit =
+        e.target.type === "radio" ? e?.target?.value : "history-in-distance";
       if (!timelineUnit) return false;
       document
         .querySelectorAll("ul > li > div.time > span")
@@ -93,6 +103,43 @@ const displayHoursMinutesSeconds = (hours: number): string => {
         input.addEventListener("input", listenToTimelineInputChange)
       );
   }
+
+  const populateCustomDistance = () => {
+    const totalDistance = document?.getElementById("distance")?.value;
+    document
+      .querySelectorAll(
+        "ul > li > div.time > span[data-unit='history-in-distance']"
+      )
+      .forEach(
+        (eventElSpan) =>
+          (eventElSpan.textContent = convertTimedRatioedOverCustomNumber(
+            Number(eventElSpan?.closest("li")?.dataset?.years),
+            Number(totalDistance)
+          ))
+      );
+  };
+
+  import { timeline } from "../utils/timeline";
+
+  const convertTimedRatioedOverCustomNumber = (
+    yearsBeforePresent: number,
+    totalDistance: number
+  ) => {
+    const startTimeline = timeline[0].dateYearsBeforePresent;
+    const endTimeline = 0;
+    const yearsComparedToStart = startTimeline - yearsBeforePresent;
+    const timeSpanYearEquivalent = startTimeline - endTimeline;
+    const eventRatio = yearsComparedToStart / timeSpanYearEquivalent;
+    if (!totalDistance) return "please enter a valid distance";
+    return isNaN(eventRatio * totalDistance)
+      ? "-"
+      : `${eventRatio * totalDistance}m`;
+  };
+  document
+    .querySelectorAll(".require-js input")
+    .forEach((input) =>
+      input.addEventListener("input", populateCustomDistance)
+    );
 </script>
 <Layout title='👩‍🚀Humankind timeline'>
   <h1>🐵🔥 <span class='text-gradient'>Humankind</span> Timeline 🚀👩‍🚀</h1>
@@ -145,6 +192,28 @@ const displayHoursMinutesSeconds = (hours: number): string => {
             />
             <label for='years-vs-era'>Years compared to our era</label>
           </div>
+          {
+            enableDistanceInput && (
+              <div
+                data-container='distance-inputs-container'
+                class='input-option two-rows-reveal require-js'
+              >
+                <input
+                  type='radio'
+                  id='history-in-distance'
+                  name='display-unit-timeline'
+                  value='history-in-distance'
+                />
+                <label for='history-in-distance'>
+                  History scaled to specific distance
+                </label>
+                <div class='distance-input'>
+                  <label for='distance'>Distance (m)</label>
+                  <input type='number' name='distance' id='distance' />
+                </div>
+              </div>
+            )
+          }
         </div>
       </fieldset>
     </form>
@@ -152,7 +221,10 @@ const displayHoursMinutesSeconds = (hours: number): string => {
       <ul role='list' class='timeline' data-timeline-role='timeline'>
         {
           timeline.map((event: IEvent, i) => (
-            <li data-timeline-role='event'>
+            <li
+              data-timeline-role='event'
+              data-years={event.dateYearsBeforePresent}
+            >
               <div class='time text-gradient'>
                 <span data-unit='years-vs-present' class='hidden-on-load'>
                   {event.dateYearsBeforePresent} before present day
@@ -176,6 +248,9 @@ const displayHoursMinutesSeconds = (hours: number): string => {
                   {i !== timeline.length - 1
                     ? getEventTimeByRatio(event.dateYearsBeforePresent, "day")
                     : "midnight"}
+                </span>
+                <span data-unit='history-in-distance' class='hidden-on-load'>
+                  Custom distance
                 </span>
               </div>
               <div class='title'>
@@ -245,6 +320,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   fieldset div.input-option {
     padding: 5px 0 7px;
     border-radius: var(--radius-1);
+  }
+  fieldset div.input-option:not(.two-rows-reveal) {
     display: flex;
   }
   fieldset div.input-option:focus-within {
@@ -259,7 +336,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   label {
     cursor: pointer;
   }
-  label {
+  .input-option > label {
     flex: 1;
   }
   section.timeline {
@@ -304,6 +381,34 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     display: none;
   }
 
+  .two-rows-reveal {
+    display: grid;
+    grid-template-areas:
+      "radio label"
+      ". to-reveal";
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+  }
+  .two-rows-reveal > input {
+    grid-area: radio;
+  }
+  .two-rows-reveal > label {
+    grid-area: label;
+  }
+  .two-rows-reveal .distance-input {
+    display: none;
+    grid-area: to-reveal;
+    padding-right: 5px;
+  }
+  .two-rows-reveal .distance-input > :is(label, input) {
+    flex: 20%;
+    height: auto;
+  }
+  #history-in-distance:checked ~ .distance-input {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
   @supports selector(:has(input)) {
     body:has(input[name="display-unit-timeline"][value="history-in-a-year"])
       span[data-unit="history-in-a-year"] {
@@ -346,6 +451,16 @@ const displayHoursMinutesSeconds = (hours: number): string => {
       span[data-unit="years-vs-era"] {
       display: block;
     }
+    body:has(input[name="display-unit-timeline"][value="history-in-distance"])
+      span[data-unit="history-in-distance"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="history-in-distance"]:checked
+      )
+      span[data-unit="history-in-distance"] {
+      display: block;
+    }
 
     fieldset div.inputs-group {
       background-color: var(--green-1-light);
@@ -365,6 +480,17 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     }
     fieldset div.input-option:has(label:hover):not(:has(input:checked)) {
       background-color: var(--green-2-lighter);
+    }
+    .two-rows-reveal {
+      grid-template-areas: "radio label";
+      grid-template-rows: 1fr 0px;
+      grid-template-columns: 8px 1fr;
+    }
+    .two-rows-reveal:has(> input:checked) {
+      grid-template-areas:
+        "radio label"
+        ". to-reveal";
+      grid-template-rows: 1fr 1fr;
     }
   }
   @media screen and (min-width: 600px) {
