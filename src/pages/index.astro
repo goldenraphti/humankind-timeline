@@ -79,11 +79,6 @@ const enableDistanceInput = true;
     ) => {
       if (spanElmt?.dataset.unit === timelineUnit) {
         spanElmt.style.display = "block";
-      } else if (
-        spanElmt?.dataset.unit === "history-in-distance" &&
-        timelineUnit
-      ) {
-        spanElmt.style.display = "block";
       } else if (spanElmt?.dataset.unit !== timelineUnit) {
         spanElmt.style.display = "none";
       }
