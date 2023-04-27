@@ -1,0 +1,211 @@
+---
+import { timeline, IEvent, referenceYear } from "../utils/timeline";
+
+export type ITimelineSpan = "day" | "year";
+
+const getEventTimeByRatio = (
+  yearBeforePresent: number,
+  timelineSpan: ITimelineSpan
+) => {
+  const startTimeline = timeline[0].dateYearsBeforePresent;
+  const endTimeline = 0;
+  const yearsComparedToStart = startTimeline - yearBeforePresent;
+  const timeSpanYearEquivalent = startTimeline - endTimeline;
+  let spanRatio;
+  if (timelineSpan === "day") {
+    spanRatio = 24;
+  } else if (timelineSpan === "year") {
+    spanRatio = 365;
+  } else {
+    return false;
+  }
+  const ratioOverTimeSpan =
+    (yearsComparedToStart * spanRatio) / timeSpanYearEquivalent;
+
+  if (timelineSpan === "day") {
+    return displayHoursMinutesSeconds(ratioOverTimeSpan);
+  } else if (timelineSpan === "year") {
+    return convertDaysToDate(ratioOverTimeSpan);
+  } else if (timelineSpan === "year") {
+    console.log("ratio");
+  } else {
+    return ratioOverTimeSpan;
+  }
+};
+
+function addDays(date: Date, days: number) {
+  const result = date;
+  const daysInteger = Math.floor(days);
+  const hours = days - daysInteger;
+
+  result.setDate(result.getDate() + daysInteger);
+  result.setHours(...timeConvert(hours));
+  return result;
+}
+
+const convertDaysToDate = (daysNumber: number) => {
+  const thisStartOfYearDate = new Date(Date.UTC(2023, 0, 1, 0, 0, 0));
+  const adjustedDate = addDays(thisStartOfYearDate, daysNumber);
+  return adjustedDate.toLocaleDateString(undefined, {
+    month: "long",
+    day: "numeric",
+  });
+};
+
+function timeConvert(hours: number): number[] {
+  const hoursToDisplay = Math.floor(hours);
+  const minutes = (hours - Math.floor(hours)) * 60;
+  const minutesToDisplay = Math.floor(minutes);
+  const secondsToDisplay = Math.floor(minutes % 60);
+  return [hoursToDisplay, minutesToDisplay, secondsToDisplay];
+}
+
+const displayHoursMinutesSeconds = (hours: number): string => {
+  const hoursMinSecArr = timeConvert(hours);
+  return `${hoursMinSecArr[0]}:${hoursMinSecArr[1]}'${hoursMinSecArr[2]}''`;
+};
+---
+
+<section class='timeline'>
+  <ul role='list' class='timeline' data-timeline-role='timeline'>
+    {
+      timeline.map((event: IEvent, i) => (
+        <li
+          data-timeline-role='event'
+          data-years={event.dateYearsBeforePresent}
+        >
+          <div class='time text-gradient'>
+            <span data-unit='years-vs-present' class='hidden-on-load'>
+              {event.dateYearsBeforePresent} before present day
+            </span>
+            <span data-unit='years-vs-era' class='hidden-on-load'>
+              {event.dateYearsBeforePresent < referenceYear
+                ? referenceYear - event.dateYearsBeforePresent
+                : referenceYear - event.dateYearsBeforePresent}
+            </span>
+            <span data-unit='history-in-a-year'>
+              {i !== timeline.length - 1
+                ? getEventTimeByRatio(event.dateYearsBeforePresent, "year") +
+                  " " +
+                  getEventTimeByRatio(event.dateYearsBeforePresent, "day")
+                : "End of the year, midnight"}
+            </span>
+            <span data-unit='history-in-a-day' class='hidden-on-load'>
+              {i !== timeline.length - 1
+                ? getEventTimeByRatio(event.dateYearsBeforePresent, "day")
+                : "midnight"}
+            </span>
+            <span data-unit='history-in-distance' class='hidden-on-load'>
+              Custom distance
+            </span>
+          </div>
+          <div class='title'>
+            {event.events.map((evt) => (
+              <p>{evt}</p>
+            ))}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <div class='vertical-line'></div>
+</section>
+
+<style>
+  section.timeline {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    grid-template-rows: 1fr;
+  }
+  .vertical-line {
+    background-color: rgba(var(--green-2-rgb-values) / 0.2);
+    width: 2px;
+    height: 100%;
+    z-index: 0;
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+  }
+  ul {
+    grid-row: 1 / 2;
+    grid-column: 1 / -1;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+    padding-left: 0;
+    max-width: 100ch;
+    margin: 0;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--green-1-light);
+    z-index: 2;
+    border: 1.5px solid rgba(var(--green-2-rgb-values) / 0.2);
+    border-radius: 25px;
+    padding: 15px;
+  }
+  .title p {
+    text-align: center;
+  }
+  .hidden-on-load {
+    display: none;
+  }
+</style>
+<style is:global>
+  @supports selector(:has(input)) {
+    body:has(input[name="display-unit-timeline"][value="history-in-a-year"])
+      span[data-unit="history-in-a-year"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="history-in-a-year"]:checked
+      )
+      span[data-unit="history-in-a-year"] {
+      display: block;
+    }
+
+    body:has(input[name="display-unit-timeline"][value="history-in-a-day"])
+      span[data-unit="history-in-a-day"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="history-in-a-day"]:checked
+      )
+      span[data-unit="history-in-a-day"] {
+      display: block;
+    }
+
+    body:has(input[name="display-unit-timeline"][value="years-vs-present"])
+      span[data-unit="years-vs-present"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="years-vs-present"]:checked
+      )
+      span[data-unit="years-vs-present"] {
+      display: block;
+    }
+
+    body:has(input[name="display-unit-timeline"][value="years-vs-era"])
+      span[data-unit="years-vs-era"] {
+      display: none;
+    }
+    body:has(input[name="display-unit-timeline"][value="years-vs-era"]:checked)
+      span[data-unit="years-vs-era"] {
+      display: block;
+    }
+    body:has(input[name="display-unit-timeline"][value="history-in-distance"])
+      span[data-unit="history-in-distance"] {
+      display: none;
+    }
+    body:has(
+        input[name="display-unit-timeline"][value="history-in-distance"]:checked
+      )
+      span[data-unit="history-in-distance"] {
+      display: block;
+    }
+  }
+</style>

@@ -37,7 +37,7 @@ and gain a fresh perspective on the most significant events that shaped us.
   <body>
     <slot />
     <footer>
-      <div class='card'>
+      <div class='card green'>
         Made with 💚 by <a href='https://raphaelferrand.com'>Raphaël Ferrand</a>
       </div>
     </footer>
@@ -66,7 +66,15 @@ and gain a fresh perspective on the most significant events that shaped us.
     --green-2-darker: #17392f;
     --grey-green-2: #3a4642;
     --green-3-rgb-values: 217 243 216;
+    --red-1: #f12711;
+    --yellow-1: #fdc830;
+    --orange-1: #f37335;
     --gradient-green: linear-gradient(to right, var(--green-1), var(--green-2));
+    --gradient-orange: linear-gradient(
+      to right,
+      var(--yellow-1),
+      var(--orange-1)
+    );
     --accent-gradient: linear-gradient(
       45deg,
       rgb(var(--accent)),
@@ -113,9 +121,22 @@ and gain a fresh perspective on the most significant events that shaped us.
     font-family: "DM Serif Display", serif;
   }
   .card {
-    background: var(--gradient-green);
     border-radius: 15px;
     z-index: 5;
+  }
+  .card.green {
+    background: var(--gradient-green);
+  }
+  .card.orange {
+    background: var(--gradient-orange);
+  }
+
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
   }
 </style>
 <style>

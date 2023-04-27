@@ -9,6 +9,7 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 ## Roadmap
 
+- [ ] add option to choose the starting point ( starting point: Genus Homo / Homo Sapiens)
 - [ ] refactor code
 - [ ] improve display hours
 - [ ] improve perf try conditional import of "hasNotSupported" script, so browsers supporting `:has(input)` do not even have to have this script
