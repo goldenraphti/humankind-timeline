@@ -1,5 +1,6 @@
 ---
 import "@fontsource/dm-serif-display";
+import Footer from "../components/Footer.astro";
 
 export interface Props {
   title: string;
@@ -36,11 +37,7 @@ and gain a fresh perspective on the most significant events that shaped us.
   </head>
   <body>
     <slot />
-    <footer>
-      <div class='card green'>
-        Made with 💚 by <a href='https://raphaelferrand.com'>Raphaël Ferrand</a>
-      </div>
-    </footer>
+    <Footer />
   </body>
 </html>
 <style is:global>
@@ -137,15 +134,5 @@ and gain a fresh perspective on the most significant events that shaped us.
     -webkit-text-fill-color: transparent;
     background-size: 400%;
     background-position: 0%;
-  }
-</style>
-<style>
-  footer {
-    margin-top: 50px;
-  }
-  footer .card {
-    margin-bottom: 10px;
-    padding: 15px 25px;
-    box-shadow: var(--shadow-elevation-medium);
   }
 </style>
