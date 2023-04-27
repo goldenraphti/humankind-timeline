@@ -75,27 +75,27 @@ const displayHoursMinutesSeconds = (hours: number): string => {
           data-years={event.dateYearsBeforePresent}
         >
           <div class='time text-gradient'>
-            <span data-unit='years-vs-present' class='hidden-on-load'>
+            <span data-unit='years vs present' class='hidden-on-load'>
               {event.dateYearsBeforePresent} before present day
             </span>
-            <span data-unit='years-vs-era' class='hidden-on-load'>
+            <span data-unit='years vs era' class='hidden-on-load'>
               {event.dateYearsBeforePresent < referenceYear
                 ? referenceYear - event.dateYearsBeforePresent
                 : referenceYear - event.dateYearsBeforePresent}
             </span>
-            <span data-unit='history-in-a-year'>
+            <span data-unit='history in a year'>
               {i !== timeline.length - 1
                 ? getEventTimeByRatio(event.dateYearsBeforePresent, "year") +
                   " " +
                   getEventTimeByRatio(event.dateYearsBeforePresent, "day")
                 : "End of the year, midnight"}
             </span>
-            <span data-unit='history-in-a-day' class='hidden-on-load'>
+            <span data-unit='history in a day' class='hidden-on-load'>
               {i !== timeline.length - 1
                 ? getEventTimeByRatio(event.dateYearsBeforePresent, "day")
                 : "midnight"}
             </span>
-            <span data-unit='history-in-distance' class='hidden-on-load'>
+            <span data-unit='history in distance' class='hidden-on-load'>
               Custom distance
             </span>
           </div>
@@ -156,55 +156,47 @@ const displayHoursMinutesSeconds = (hours: number): string => {
 </style>
 <style is:global>
   @supports selector(:has(input)) {
-    body:has(input[name="display-unit-timeline"][value="history-in-a-year"])
-      span[data-unit="history-in-a-year"] {
+    body:has(input[name="unit"][value="history in a year"])
+      span[data-unit="history in a year"] {
       display: none;
     }
-    body:has(
-        input[name="display-unit-timeline"][value="history-in-a-year"]:checked
-      )
-      span[data-unit="history-in-a-year"] {
+    body:has(input[name="unit"][value="history in a year"]:checked)
+      span[data-unit="history in a year"] {
       display: block;
     }
 
-    body:has(input[name="display-unit-timeline"][value="history-in-a-day"])
-      span[data-unit="history-in-a-day"] {
+    body:has(input[name="unit"][value="history in a day"])
+      span[data-unit="history in a day"] {
       display: none;
     }
-    body:has(
-        input[name="display-unit-timeline"][value="history-in-a-day"]:checked
-      )
-      span[data-unit="history-in-a-day"] {
+    body:has(input[name="unit"][value="history in a day"]:checked)
+      span[data-unit="history in a day"] {
       display: block;
     }
 
-    body:has(input[name="display-unit-timeline"][value="years-vs-present"])
-      span[data-unit="years-vs-present"] {
+    body:has(input[name="unit"][value="years vs present"])
+      span[data-unit="years vs present"] {
       display: none;
     }
-    body:has(
-        input[name="display-unit-timeline"][value="years-vs-present"]:checked
-      )
-      span[data-unit="years-vs-present"] {
+    body:has(input[name="unit"][value="years vs present"]:checked)
+      span[data-unit="years vs present"] {
       display: block;
     }
 
-    body:has(input[name="display-unit-timeline"][value="years-vs-era"])
-      span[data-unit="years-vs-era"] {
+    body:has(input[name="unit"][value="years vs era"])
+      span[data-unit="years vs era"] {
       display: none;
     }
-    body:has(input[name="display-unit-timeline"][value="years-vs-era"]:checked)
-      span[data-unit="years-vs-era"] {
+    body:has(input[name="unit"][value="years vs era"]:checked)
+      span[data-unit="years vs era"] {
       display: block;
     }
-    body:has(input[name="display-unit-timeline"][value="history-in-distance"])
-      span[data-unit="history-in-distance"] {
+    body:has(input[name="unit"][value="history in distance"])
+      span[data-unit="history in distance"] {
       display: none;
     }
-    body:has(
-        input[name="display-unit-timeline"][value="history-in-distance"]:checked
-      )
-      span[data-unit="history-in-distance"] {
+    body:has(input[name="unit"][value="history in distance"]:checked)
+      span[data-unit="history in distance"] {
       display: block;
     }
   }

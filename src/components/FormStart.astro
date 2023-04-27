@@ -1,0 +1,47 @@
+---
+---
+
+<form
+  class='starting-point-selection card orange'
+  oninput='result.value=startpoint.value'
+>
+  <p class='form-output'>
+    🏁 Starting point:
+    <output name='result' for='genus-homo fire sapiens'>Genus Homo</output>
+  </p>
+  <details>
+    <summary>Modify starting point:</summary>
+    <fieldset>
+      <div class='inputs-group'>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='homo'
+            name='startpoint'
+            value='genus homo'
+            checked
+          />
+          <label for='homo'>Genus Homo</label>
+        </div>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='fire'
+            name='startpoint'
+            value='daily usage of fire'
+          />
+          <label for='fire'>Daily usage of fire</label>
+        </div>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='sapiens'
+            name='startpoint'
+            value='homo sapiens'
+          />
+          <label for='sapiens'>Homo Sapiens</label>
+        </div>
+      </div>
+    </fieldset>
+  </details>
+</form>

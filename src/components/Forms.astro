@@ -1,135 +1,70 @@
 ---
-const enableDistanceInput = true;
+import FormUnit from "./FormUnit.astro";
+import FormStart from "./FormStart.astro";
 ---
 
 <script src='../utils/main.ts'></script>
 <section>
-  <form class='time-unit-selection card green'>
-    <fieldset>
-      <legend>Select a timeline unit ⏰</legend>
-
-      <div class='inputs-group'>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='history-in-a-year'
-            name='display-unit-timeline'
-            value='history-in-a-year'
-            checked
-          />
-          <label for='history-in-a-year'>If History was 1 year</label>
-        </div>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='history-in-a-day'
-            name='display-unit-timeline'
-            value='history-in-a-day'
-          />
-          <label for='history-in-a-day'>If History was 1 day</label>
-        </div>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='years-vs-present'
-            name='display-unit-timeline'
-            value='years-vs-present'
-          />
-          <label for='years-vs-present'>Years before present</label>
-        </div>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='years-vs-era'
-            name='display-unit-timeline'
-            value='years-vs-era'
-          />
-          <label for='years-vs-era'>Years compared to our era</label>
-        </div>
-        {
-          enableDistanceInput && (
-            <div
-              data-container='distance-inputs-container'
-              class='input-option two-rows-reveal require-js'
-            >
-              <input
-                type='radio'
-                id='history-in-distance'
-                name='display-unit-timeline'
-                value='history-in-distance'
-              />
-              <label for='history-in-distance'>
-                History scaled to specific distance
-              </label>
-              <div class='distance-input'>
-                <label for='distance'>Distance (m)</label>
-                <input type='number' name='distance' id='distance' />
-              </div>
-            </div>
-          )
-        }
-      </div>
-    </fieldset>
-  </form>
-  <form class='starting-point-selection card orange'>
-    <fieldset>
-      <legend>Select a Starting Point 🏁</legend>
-
-      <div class='inputs-group'>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='genus-homo'
-            name='display-start-point-timeline'
-            value='genus-homo'
-            checked
-          />
-          <label for='genus-homo'>Genus Homo</label>
-        </div>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='fire'
-            name='display-start-point-timeline'
-            value='fire'
-          />
-          <label for='fire'>Daily usage of fire</label>
-        </div>
-        <div class='input-option'>
-          <input
-            type='radio'
-            id='sapiens'
-            name='display-start-point-timeline'
-            value='sapiens'
-          />
-          <label for='sapiens'>Homo Sapiens</label>
-        </div>
-      </div>
-    </fieldset>
-  </form>
+  <FormUnit />
+  <FormStart />
 </section>
 
 <style>
   section {
     display: flex;
+    align-items: start;
+    gap: 20px;
   }
-
+</style>
+<style is:global>
   form.card {
-    align-self: center;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     padding: 25px;
     box-shadow: var(--shadow-elevation-high);
     margin-bottom: 70px;
     min-block-size: auto;
     min-inline-size: auto;
   }
+  form.card p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  form.card p.form-output {
+    font-size: 1.2em;
+    padding-bottom: 15px;
+    text-transform: capitalize;
+  }
+  .form-output output {
+    font-weight: bold;
+  }
+  summary {
+    text-align: center;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  details > summary {
+    list-style-type: "▶️";
+  }
+
+  details[open] > summary {
+    list-style-type: "🔽";
+  }
+
+  details {
+    border: 1px solid rgba(53, 53, 53, 0.308);
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+  }
+
+  details[open] > summary {
+    margin-bottom: 0.5rem;
+  }
   fieldset {
     border: none;
-  }
-  legend {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--green-2-darker);
-    padding-bottom: 15px;
   }
   fieldset div.inputs-group {
     display: flex;
@@ -157,35 +92,6 @@ const enableDistanceInput = true;
   }
   .input-option > label {
     flex: 1;
-  }
-
-  .two-rows-reveal {
-    display: grid;
-    grid-template-areas:
-      "radio label"
-      ". to-reveal";
-    grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
-  .two-rows-reveal > input {
-    grid-area: radio;
-  }
-  .two-rows-reveal > label {
-    grid-area: label;
-  }
-  .two-rows-reveal .distance-input {
-    display: none;
-    grid-area: to-reveal;
-    padding-right: 5px;
-  }
-  .two-rows-reveal .distance-input > :is(label, input) {
-    flex: 20%;
-    height: auto;
-  }
-  #history-in-distance:checked ~ .distance-input {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
   }
   @supports selector(:has(input)) {
     fieldset div.inputs-group {

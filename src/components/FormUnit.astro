@@ -1,0 +1,106 @@
+---
+const enableDistanceInput = true;
+---
+
+<form class='time-unit-selection card green' oninput='result.value=unit.value'>
+  <p class='form-output'>
+    ⏰ History represented as:
+    <output name='result' for='genus-homo fire sapiens'>1 year</output>
+  </p>
+  <details>
+    <summary>Modify representation of History:</summary>
+    <fieldset>
+      <div class='inputs-group'>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='history-in-a-year'
+            name='unit'
+            value='history in a year'
+            checked
+          />
+          <label for='history-in-a-year'>If History was 1 year</label>
+        </div>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='history-in-a-day'
+            name='unit'
+            value='history in a day'
+          />
+          <label for='history-in-a-day'>If History was 1 day</label>
+        </div>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='years-vs-present'
+            name='unit'
+            value='years vs present'
+          />
+          <label for='years-vs-present'>Years before present</label>
+        </div>
+        <div class='input-option'>
+          <input
+            type='radio'
+            id='years-vs-era'
+            name='unit'
+            value='years vs era'
+          />
+          <label for='years-vs-era'>Years compared to our era</label>
+        </div>
+        {
+          enableDistanceInput && (
+            <div
+              data-container='distance-inputs-container'
+              class='input-option two-rows-reveal require-js'
+            >
+              <input
+                type='radio'
+                id='history-in-distance'
+                name='unit'
+                value='history in distance'
+              />
+              <label for='history-in-distance'>
+                History scaled to specific distance
+              </label>
+              <div class='distance-input'>
+                <label for='distance'>Distance (m)</label>
+                <input type='number' name='distance' id='distance' />
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </fieldset>
+  </details>
+</form>
+<style>
+  .two-rows-reveal {
+    display: grid;
+    grid-template-areas:
+      "radio label"
+      ". to-reveal";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .two-rows-reveal > input {
+    grid-area: radio;
+  }
+  .two-rows-reveal > label {
+    grid-area: label;
+  }
+  .two-rows-reveal .distance-input {
+    display: none;
+    grid-area: to-reveal;
+    padding-right: 5px;
+  }
+  .two-rows-reveal .distance-input > :is(label, input) {
+    flex: 20%;
+    height: auto;
+  }
+  #history-in-distance:checked ~ .distance-input {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+</style>
