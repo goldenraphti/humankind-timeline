@@ -14,7 +14,7 @@ if (!CSS.supports("selector(:has(input))")) {
 
   const listenToTimelineInputChange = (e: Event) => {
     const timelineUnit =
-      e.target.type === "radio" ? e?.target?.value : "history-in-distance";
+      e.target.type === "radio" ? e?.target?.value : "history in distance";
     if (!timelineUnit) return false;
     document
       .querySelectorAll("ul > li > div.time > span")
@@ -31,7 +31,7 @@ const populateCustomDistance = () => {
   const totalDistance = document?.getElementById("distance")?.value;
   document
     .querySelectorAll(
-      "ul > li > div.time > span[data-unit='history-in-distance']"
+      "ul > li > div.time > span[data-unit='history in distance']"
     )
     .forEach(
       (eventElSpan) =>
