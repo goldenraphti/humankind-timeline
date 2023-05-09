@@ -9,7 +9,6 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 ## Roadmap
 
-- [ ] enable hide events anterior to startpoint on non-has compatible (i.e. FF)
 - [ ] hide custom-distance option if no-js, so can fully work with no-js
 - [ ] improve style options forms
 - [ ] improve display hours

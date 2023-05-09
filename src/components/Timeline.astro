@@ -106,10 +106,10 @@ const displayHoursMinutesSeconds = (hours: number): string => {
                   ? getEventTimeByRatio(event.dateYearsBeforePresent, "day",  startPointsDates[startKey])
                   : "midnight"}
               </span>
+              <span data-start={startKey} data-unit='history in distance' class='hidden-on-load'>
+                Custom distance
+              </span>
             ))}
-            <span data-unit='history in distance' class='hidden-on-load'>
-              Custom distance
-            </span>
           </div>
           <div class='title'>
             {event.events.map((evt) => (

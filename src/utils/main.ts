@@ -6,6 +6,7 @@ if (!CSS.supports("selector(:has(input))")) {
       'form.time-unit-selection input[type="radio"]:checked'
     )?.value;
 
+    console.log(timelineUnit);
     if (!timelineUnit) return false;
 
     const timelineStart = document?.querySelector(
@@ -46,9 +47,9 @@ if (!CSS.supports("selector(:has(input))")) {
   };
 
   const listenToTimelineInputChange = () => {
-    document
-      .querySelectorAll("form input")
-      .forEach((input) => input.addEventListener("input", adjustTimeline));
+    document.querySelectorAll("form input").forEach((input) => {
+      input.addEventListener("input", adjustTimeline);
+    });
   };
   listenToTimelineInputChange();
 }
@@ -68,13 +69,18 @@ const populateCustomDistance = () => {
     );
 };
 
-import { timeline } from "../utils/timeline";
+import { startPointsDates, timeline } from "../utils/timeline";
 
 const convertTimedRatioedOverCustomNumber = (
   yearsBeforePresent: number,
   totalDistance: number
 ) => {
-  const startTimeline = timeline[0].dateYearsBeforePresent;
+  const startTimeline =
+    startPointsDates[
+      document.querySelector(
+        'form.starting-point-selection input[type="radio"]:checked'
+      )?.value
+    ];
   const endTimeline = 0;
   const yearsComparedToStart = startTimeline - yearsBeforePresent;
   const timeSpanYearEquivalent = startTimeline - endTimeline;
@@ -85,5 +91,5 @@ const convertTimedRatioedOverCustomNumber = (
     : `${eventRatio * totalDistance}m`;
 };
 document
-  .querySelectorAll(".require-js input#distance")
+  .querySelectorAll("form input")
   .forEach((input) => input.addEventListener("input", populateCustomDistance));
