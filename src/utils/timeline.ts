@@ -8,7 +8,13 @@ export interface IEvent {
   description?: string;
 }
 
-export const referenceYear = 2023;
+export const referenceYear = new Date().getUTCFullYear();
+
+export const startPointsDates = {
+  homo: 2500000,
+  fire: 300000,
+  sapiens: 200000,
+};
 
 export const timeline: IEvent[] = [
   // {

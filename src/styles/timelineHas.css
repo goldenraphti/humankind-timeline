@@ -1,0 +1,79 @@
+@supports selector(:has(input)) {
+    body:has(input[name="unit"][value="history in distance"]) ul li span {
+      display: block;
+    }
+
+    /* hide timeline times spans depending on the unit selected */
+    body:has(input[name="unit"][value="history in a year"]:checked) span:not([data-unit="history in a year"]) {
+      display: none;
+    }
+
+    body:has(input[name="unit"][value="history in a day"]:checked) span:not([data-unit="history in a day"]) {
+      display: none;
+    }
+
+    body:has(input[name="unit"][value="years vs present"]:checked) span:not([data-unit="years vs present"]) {
+      display: none;
+    }
+
+    body:has(input[name="unit"][value="years vs era"]:checked) span:not([data-unit="years vs era"]) {
+      display: none;
+    }
+
+    /* hide timeline times spans depending on the unit selected */
+    body:has(input[name="startpoint"][value="genus homo"]:checked) span:not([data-start="homo"]) {
+      display: none;
+    }
+
+    body:has(input[name="startpoint"][value="daily usage of fire"]:checked) span:not([data-start="fire"]) {
+      display: none;
+    }
+
+    body:has(input[name="startpoint"][value="homo sapiens"]:checked) span:not([data-start="sapiens"]) {
+      display: none;
+    }
+
+    /* body:has(input[name="unit"][value="history in a day"])
+      span[data-unit="history in a day"] {
+      display: none;
+    }
+    body:has(input[name="unit"][value="history in a day"]:checked)
+      span[data-unit="history in a day"] {
+      display: block;
+    }
+
+    body:has(input[name="unit"][value="years vs present"])
+      span[data-unit="years vs present"] {
+      display: none;
+    }
+    body:has(input[name="unit"][value="years vs present"]:checked)
+      span[data-unit="years vs present"] {
+      display: block;
+    }
+
+    body:has(input[name="unit"][value="years vs era"])
+      span[data-unit="years vs era"] {
+      display: none;
+    }
+    body:has(input[name="unit"][value="years vs era"]:checked)
+      span[data-unit="years vs era"] {
+      display: block;
+    }
+    body:has(input[name="unit"][value="history in distance"])
+      span[data-unit="history in distance"] {
+      display: none;
+    }
+    body:has(input[name="unit"][value="history in distance"]:checked)
+      span[data-unit="history in distance"] {
+      display: block;
+    } */
+
+
+    /* hides events anterior to startpoint selected */
+    body:has(input[name="startpoint"][value="daily usage of fire"]:checked) li:not([data-start-fire-compatible]) {
+      display: none;
+    }
+    body:has(input[name="startpoint"][value="homo sapiens"]:checked) li:not([data-start-sapiens-compatible]) {
+      display: none;
+    }
+  }

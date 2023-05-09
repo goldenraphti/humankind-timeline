@@ -21,7 +21,7 @@ if (!CSS.supports("selector(:has(input))")) {
       .forEach((eventElSpan) => adjustTimeline(eventElSpan, timelineUnit));
   };
   document
-    .querySelectorAll("input")
+    .querySelectorAll("input[name='unit']")
     .forEach((input) =>
       input.addEventListener("input", listenToTimelineInputChange)
     );
@@ -59,5 +59,5 @@ const convertTimedRatioedOverCustomNumber = (
     : `${eventRatio * totalDistance}m`;
 };
 document
-  .querySelectorAll(".require-js input")
+  .querySelectorAll(".require-js input#distance")
   .forEach((input) => input.addEventListener("input", populateCustomDistance));

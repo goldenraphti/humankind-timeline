@@ -2,7 +2,11 @@
 const enableDistanceInput = true;
 ---
 
-<form class='time-unit-selection card green' oninput='result.value=unit.value'>
+<form
+  class='time-unit-selection card green'
+  oninput='result.value=unit.value'
+  style='--color-border:var(--green-2-dark-2)'
+>
   <p class='form-output'>
     ⏰ History represented as:
     <output name='result' for='genus-homo fire sapiens'>1 year</output>

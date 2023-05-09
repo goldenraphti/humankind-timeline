@@ -1,13 +1,21 @@
 ---
-import { timeline, IEvent, referenceYear } from "../utils/timeline";
+import {
+  timeline,
+  IEvent,
+  referenceYear,
+  startPointsDates,
+} from "../utils/timeline";
+
+import "../styles/timelineHas.css"
 
 export type ITimelineSpan = "day" | "year";
 
 const getEventTimeByRatio = (
   yearBeforePresent: number,
-  timelineSpan: ITimelineSpan
+  timelineSpan: ITimelineSpan,
+  startTime: number
 ) => {
-  const startTimeline = timeline[0].dateYearsBeforePresent;
+  const startTimeline = startTime;
   const endTimeline = 0;
   const yearsComparedToStart = startTimeline - yearBeforePresent;
   const timeSpanYearEquivalent = startTimeline - endTimeline;
@@ -73,28 +81,32 @@ const displayHoursMinutesSeconds = (hours: number): string => {
         <li
           data-timeline-role='event'
           data-years={event.dateYearsBeforePresent}
+          data-start-fire-compatible={event.dateYearsBeforePresent <= startPointsDates.fire}
+          data-start-sapiens-compatible={event.dateYearsBeforePresent <= startPointsDates.sapiens}
         >
           <div class='time text-gradient'>
-            <span data-unit='years vs present' class='hidden-on-load'>
-              {event.dateYearsBeforePresent} before present day
-            </span>
-            <span data-unit='years vs era' class='hidden-on-load'>
-              {event.dateYearsBeforePresent < referenceYear
-                ? referenceYear - event.dateYearsBeforePresent
-                : referenceYear - event.dateYearsBeforePresent}
-            </span>
-            <span data-unit='history in a year'>
-              {i !== timeline.length - 1
-                ? getEventTimeByRatio(event.dateYearsBeforePresent, "year") +
-                  " " +
-                  getEventTimeByRatio(event.dateYearsBeforePresent, "day")
-                : "End of the year, midnight"}
-            </span>
-            <span data-unit='history in a day' class='hidden-on-load'>
-              {i !== timeline.length - 1
-                ? getEventTimeByRatio(event.dateYearsBeforePresent, "day")
-                : "midnight"}
-            </span>
+            {Object.keys(startPointsDates).map( (startKey: any) => (
+              <span data-start={startKey} data-unit='years vs present' class='hidden-on-load'>
+                {event.dateYearsBeforePresent} before present day
+              </span>
+              <span data-start={startKey} data-unit='years vs era' class='hidden-on-load'>
+                {event.dateYearsBeforePresent < referenceYear
+                  ? referenceYear - event.dateYearsBeforePresent
+                  : referenceYear - event.dateYearsBeforePresent}
+              </span>
+              <span data-start={startKey} data-unit='history in a year'>
+                {i !== timeline.length - 1
+                  ? getEventTimeByRatio(event.dateYearsBeforePresent, "year",  startPointsDates[startKey]) +
+                    " " +
+                    getEventTimeByRatio(event.dateYearsBeforePresent, "day",  startPointsDates[startKey])
+                  : "End of the year, midnight"}
+              </span>
+              <span data-start={startKey} data-unit='history in a day' class='hidden-on-load'>
+                {i !== timeline.length - 1
+                  ? getEventTimeByRatio(event.dateYearsBeforePresent, "day",  startPointsDates[startKey])
+                  : "midnight"}
+              </span>
+            ))}
             <span data-unit='history in distance' class='hidden-on-load'>
               Custom distance
             </span>
@@ -152,52 +164,5 @@ const displayHoursMinutesSeconds = (hours: number): string => {
   }
   .hidden-on-load {
     display: none;
-  }
-</style>
-<style is:global>
-  @supports selector(:has(input)) {
-    body:has(input[name="unit"][value="history in a year"])
-      span[data-unit="history in a year"] {
-      display: none;
-    }
-    body:has(input[name="unit"][value="history in a year"]:checked)
-      span[data-unit="history in a year"] {
-      display: block;
-    }
-
-    body:has(input[name="unit"][value="history in a day"])
-      span[data-unit="history in a day"] {
-      display: none;
-    }
-    body:has(input[name="unit"][value="history in a day"]:checked)
-      span[data-unit="history in a day"] {
-      display: block;
-    }
-
-    body:has(input[name="unit"][value="years vs present"])
-      span[data-unit="years vs present"] {
-      display: none;
-    }
-    body:has(input[name="unit"][value="years vs present"]:checked)
-      span[data-unit="years vs present"] {
-      display: block;
-    }
-
-    body:has(input[name="unit"][value="years vs era"])
-      span[data-unit="years vs era"] {
-      display: none;
-    }
-    body:has(input[name="unit"][value="years vs era"]:checked)
-      span[data-unit="years vs era"] {
-      display: block;
-    }
-    body:has(input[name="unit"][value="history in distance"])
-      span[data-unit="history in distance"] {
-      display: none;
-    }
-    body:has(input[name="unit"][value="history in distance"]:checked)
-      span[data-unit="history in distance"] {
-      display: block;
-    }
   }
 </style>
