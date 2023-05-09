@@ -74,6 +74,12 @@ const displayHoursMinutesSeconds = (hours: number): string => {
 };
 ---
 
+<script>
+  document.querySelectorAll('.hidden-if-no-js').forEach((el) => {
+    el.classList.remove('hidden-if-no-js')
+  })
+</script>
+
 <section class='timeline'>
   <ul role='list' class='timeline' data-timeline-role='timeline'>
     {
