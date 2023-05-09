@@ -9,8 +9,6 @@ Because at the end we're just a couple of animals on a big rock flying through s
 
 ## Roadmap
 
-- [ ] hide custom-distance option if no-js, so can fully work with no-js
-- [ ] improve style options forms
 - [ ] improve display hours
 - [ ] improve perf try conditional import of "hasNotSupported" script, so browsers supporting `:has(input)` do not even have to have this script
 - [ ] make i18n (dates)
