@@ -1,30 +1,56 @@
 export type ITimelineSpan = "day" | "year";
 
 if (!CSS.supports("selector(:has(input))")) {
-  const adjustTimeline = (
-    spanElmt: HTMLSpanElement,
-    timelineUnit: ITimelineSpan
-  ) => {
-    if (spanElmt?.dataset.unit === timelineUnit) {
-      spanElmt.style.display = "block";
-    } else if (spanElmt?.dataset.unit !== timelineUnit) {
-      spanElmt.style.display = "none";
-    }
+  const adjustTimeline = () => {
+    const timelineUnit = document?.querySelector(
+      'form.time-unit-selection input[type="radio"]:checked'
+    )?.value;
+
+    if (!timelineUnit) return false;
+
+    const timelineStart = document?.querySelector(
+      'form.starting-point-selection input[type="radio"]:checked'
+    )?.value;
+
+    document
+      .querySelectorAll("section.timeline ul > li span")
+      .forEach((spanElmt) => {
+        if (
+          spanElmt?.dataset.start === timelineStart &&
+          spanElmt.dataset.unit === timelineUnit
+        ) {
+          spanElmt.style.display = "block";
+        } else {
+          spanElmt.style.display = "none";
+        }
+      });
+
+    hideAllEventsAnteriorStartpointChosen();
+  };
+  const hideAllEventsAnteriorStartpointChosen = () => {
+    const startpoint = document?.querySelector(
+      'form.starting-point-selection input[type="radio"]:checked'
+    )?.value;
+    document.querySelectorAll("ul > li").forEach((eventEl) => {
+      if (
+        (startpoint === "daily usage of fire" &&
+          eventEl.dataset.startFireCompatible === undefined) ||
+        (startpoint === "homo sapiens" &&
+          eventEl.dataset.startSapiensCompatible === undefined)
+      ) {
+        eventEl.style.display = "none";
+      } else {
+        eventEl.style.display = "flex";
+      }
+    });
   };
 
-  const listenToTimelineInputChange = (e: Event) => {
-    const timelineUnit =
-      e.target.type === "radio" ? e?.target?.value : "history in distance";
-    if (!timelineUnit) return false;
+  const listenToTimelineInputChange = () => {
     document
-      .querySelectorAll("ul > li > div.time > span")
-      .forEach((eventElSpan) => adjustTimeline(eventElSpan, timelineUnit));
+      .querySelectorAll("form input")
+      .forEach((input) => input.addEventListener("input", adjustTimeline));
   };
-  document
-    .querySelectorAll("input[name='unit']")
-    .forEach((input) =>
-      input.addEventListener("input", listenToTimelineInputChange)
-    );
+  listenToTimelineInputChange();
 }
 
 const populateCustomDistance = () => {

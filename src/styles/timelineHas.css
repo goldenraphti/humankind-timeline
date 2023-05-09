@@ -21,15 +21,15 @@
     }
 
     /* hide timeline times spans depending on the unit selected */
-    body:has(input[name="startpoint"][value="genus homo"]:checked) span:not([data-start="homo"]) {
+    body:has(input[name="startpoint"][value="genus homo"]:checked) span:not([data-start="genus homo"]) {
       display: none;
     }
 
-    body:has(input[name="startpoint"][value="daily usage of fire"]:checked) span:not([data-start="fire"]) {
+    body:has(input[name="startpoint"][value="daily usage of fire"]:checked) span:not([data-start="daily usage of fire"]) {
       display: none;
     }
 
-    body:has(input[name="startpoint"][value="homo sapiens"]:checked) span:not([data-start="sapiens"]) {
+    body:has(input[name="startpoint"][value="homo sapiens"]:checked) span:not([data-start="homo sapiens"]) {
       display: none;
     }
 

@@ -81,8 +81,8 @@ const displayHoursMinutesSeconds = (hours: number): string => {
         <li
           data-timeline-role='event'
           data-years={event.dateYearsBeforePresent}
-          data-start-fire-compatible={event.dateYearsBeforePresent <= startPointsDates.fire}
-          data-start-sapiens-compatible={event.dateYearsBeforePresent <= startPointsDates.sapiens}
+          data-start-fire-compatible={event.dateYearsBeforePresent <= startPointsDates["daily usage of fire"]}
+          data-start-sapiens-compatible={event.dateYearsBeforePresent <= startPointsDates["homo sapiens"]}
         >
           <div class='time text-gradient'>
             {Object.keys(startPointsDates).map( (startKey: any) => (
