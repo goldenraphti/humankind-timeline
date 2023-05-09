@@ -52,6 +52,7 @@ if (!CSS.supports("selector(:has(input))")) {
     });
   };
   listenToTimelineInputChange();
+  adjustTimeline();
 }
 
 const populateCustomDistance = () => {
