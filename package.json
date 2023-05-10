@@ -12,6 +12,6 @@
   },
   "dependencies": {
     "@fontsource/dm-serif-display": "^4.5.10",
-    "astro": "^2.1.7"
+    "astro": "^2.4.4"
   }
 }
