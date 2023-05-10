@@ -134,6 +134,7 @@ const displayHoursMinutesSeconds = (hours: number): string => {
     display: grid;
     grid-template-columns: 1fr 2px 1fr;
     grid-template-rows: 1fr;
+    max-width: min(60ch, 90vw);
   }
   .vertical-line {
     background-color: rgba(var(--green-2-rgb-values) / 0.2);
