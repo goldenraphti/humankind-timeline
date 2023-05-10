@@ -17,17 +17,25 @@ import FormStart from "./FormStart.astro";
     align-items: start;
     flex-wrap: wrap;
     gap: 20px;
+    margin-bottom: 70px;
+  }
+
+  @media screen and (min-width: 800px) {
+    section {
+      margin-bottom: 100px;
+    }
   }
 </style>
 <style is:global>
   form.card {
     width: 350px;
+    max-width: 70vw;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     padding: 25px;
-    box-shadow: var(--shadow-elevation-high);
-    margin-bottom: 70px;
+    box-shadow: var(--shadow-elevation-medium);
+    margin-bottom: 30px;
     min-block-size: auto;
     min-inline-size: auto;
   }
@@ -129,8 +137,7 @@ import FormStart from "./FormStart.astro";
     }
   }
   @media screen and (min-width: 800px) {
-    form.card {
-      margin-bottom: 100px;
-    }
+  form.card {
+    box-shadow: var(--shadow-elevation-high);
   }
 </style>

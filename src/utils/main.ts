@@ -6,7 +6,6 @@ if (!CSS.supports("selector(:has(input))")) {
       'form.time-unit-selection input[type="radio"]:checked'
     )?.value;
 
-    console.log(timelineUnit);
     if (!timelineUnit) return false;
 
     const timelineStart = document?.querySelector(
